@@ -18,6 +18,8 @@
 #  include <ESP8266mDNS.h>
 # elif defined(ESP32)
 #  include <ESPmDNS.h>
+#elif defined(ARDUINO_RASPBERRY_PI_PICO_W) || defined(ARDUINO_RASPBERRY_PI_PICO_2W)
+#  include <ESP8266mDNS.h>
 # endif
 #endif
 
@@ -569,7 +571,7 @@ void IotWebConf::doLoop()
   {
     // Required for mDNS to work on ESP8266
 #ifdef IOTWEBCONF_CONFIG_USE_MDNS
-# ifdef ESP8266
+# ifdef defined(ESP8266) || defined(ARDUINO_RASPBERRY_PI_PICO_W) || defined(ARDUINO_RASPBERRY_PI_PICO_2W)
     MDNS.update();
 # endif
 #endif
@@ -744,6 +746,9 @@ void IotWebConf::stateChanged(NetworkState oldState, NetworkState newState)
       WiFi.mode(WIFI_STA);
       WiFi.hostname(this->_thingName);
 #elif defined(ESP32)
+      WiFi.setHostname(this->_thingName);
+      WiFi.mode(WIFI_STA);
+#elif defined(ARDUINO_RASPBERRY_PI_PICO_W) || defined(ARDUINO_RASPBERRY_PI_PICO_2W)
       WiFi.setHostname(this->_thingName);
       WiFi.mode(WIFI_STA);
 #endif
