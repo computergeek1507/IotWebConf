@@ -23,6 +23,9 @@
 #elif defined(ESP32)
 # include <WiFi.h>
 # include <WebServer.h>
+#elif defined(ARDUINO_RASPBERRY_PI_PICO_W) || defined(ARDUINO_RASPBERRY_PI_PICO_2W)
+# include <WiFi.h>
+# include <WebServer.h>
 #endif
 #include <DNSServer.h> // -- For captive portal
 
